@@ -9,15 +9,15 @@ import java.util.List;
 
 public class CustomerDAOImpl implements CustomerDAO {
     @Override
-    public boolean addCustomer(customer Customer) {
+    public boolean addCustomer(customer customer) {
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "INSERT INTO customers VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, Customer.getAccountNumber());
-            ps.setString(2, Customer.getName());
-            ps.setString(3, Customer.getAddress());
-            ps.setString(4, Customer.getPhoneNumber());
-            ps.setInt(5, Customer.getUnitsConsumed());
+            ps.setInt(1, customer.getAccountNumber());
+            ps.setString(2, customer.getName());
+            ps.setString(3, customer.getAddress());
+            ps.setString(4, customer.getPhoneNumber());
+            ps.setInt(5, customer.getUnitsConsumed());
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,5 +98,6 @@ public class CustomerDAOImpl implements CustomerDAO {
             e.printStackTrace();
             return false;
         }
+
     }
 }
