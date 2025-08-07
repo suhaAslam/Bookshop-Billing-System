@@ -36,8 +36,8 @@ public class CustomerServlet extends HttpServlet {
 
             case "view":
             default:
-                List<Customer> list = customerService.getAllCustomers();
-                request.setAttribute("customerList", list);
+                List<Customer> customerlist = customerService.getAllCustomers();
+                request.setAttribute("customerList", customerlist);
                 request.getRequestDispatcher("viewCustomers.jsp").forward(request, response);
                 break;
         }
