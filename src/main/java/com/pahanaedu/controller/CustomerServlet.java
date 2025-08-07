@@ -1,52 +1,74 @@
 package com.pahanaedu.controller;
-import com.pahanaedu.model.customer;
+
+import com.pahanaedu.model.Customer;
 import com.pahanaedu.service.CustomerService;
 
-import javax.servlet.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
-@WebServlet("/customer")
-public class CustomerServlet  extends HttpServlet {
-    private CustomerService service = new CustomerService();
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+@WebServlet("/customer")
+public class CustomerServlet extends HttpServlet {
+
+    private final CustomerService customerService = new CustomerService();
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         String action = request.getParameter("action");
 
-        switch (action) {
-            case "add":
-                customer newCust = new customer();
-                newCust.setName(request.getParameter("name"));
-                newCust.setPhone(request.getParameter("phone"));
-                newCust.setAddress(request.getParameter("address"));
-                service.addCustomer(newCust);
-                break;
-
-            case "update":
-                customer updateCust = new customer();
-                updateCust.setId(Integer.parseInt(request.getParameter("id")));
-                updateCust.setName(request.getParameter("name"));
-                updateCust.setPhone(request.getParameter("phone"));
-                updateCust.setAddress(request.getParameter("address"));
-                service.updateCustomer(updateCust);
+        switch (action != null ? action : "") {
+            case "edit":
+                int editId = Integer.parseInt(request.getParameter("id"));
+                Customer customer = customerService.getCustomerById(editId);
+                request.setAttribute("customer", customer);
+                request.getRequestDispatcher("editCustomer.jsp").forward(request, response);
                 break;
 
             case "delete":
                 int deleteId = Integer.parseInt(request.getParameter("id"));
-                service.deleteCustomer(deleteId);
+                customerService.deleteCustomer(deleteId);
+                response.sendRedirect("customer?action=view");
+                break;
+
+            case "view":
+            default:
+                List<Customer> list = customerService.getAllCustomers();
+                request.setAttribute("customerList", list);
+                request.getRequestDispatcher("viewCustomers.jsp").forward(request, response);
                 break;
         }
-
-        response.sendRedirect("viewCustomers.jsp");
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<customer> customers = service.getAllCustomers();
-        request.setAttribute("customerList", customers);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("viewCustomers.jsp");
-        dispatcher.forward(request, response);
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int accNo = Integer.parseInt(request.getParameter("accountNumber"));
+        String name = request.getParameter("name");
+        String address = request.getParameter("address");
+        String phone = request.getParameter("phoneNumber");
+        int units = Integer.parseInt(request.getParameter("unitsConsumed"));
+
+        Customer customer = new Customer.CustomerBuilder()
+                .setAccountNumber(accNo)
+                .setName(name)
+                .setAddress(address)
+                .setPhoneNumber(phone)
+                .setUnitsConsumed(units)
+                .build();
+
+        String action = request.getParameter("action");
+
+        if ("update".equalsIgnoreCase(action)) {
+            customerService.updateCustomer(customer);
+        } else {
+            customerService.addCustomer(customer);
+        }
+
+        response.sendRedirect("customer?action=view");
     }
-
-
 }

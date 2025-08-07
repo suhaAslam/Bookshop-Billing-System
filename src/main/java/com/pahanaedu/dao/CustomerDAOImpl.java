@@ -1,15 +1,16 @@
 package com.pahanaedu.dao;
-import com.pahanaedu.model.customer;
+
+import com.pahanaedu.model.Customer;
 import com.pahanaedu.util.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class CustomerDAOImpl implements CustomerDAO {
+
     @Override
-    public boolean addCustomer(customer customer) {
+    public boolean addCustomer(Customer customer) {
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "INSERT INTO customers VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -26,14 +27,14 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public customer getCustomerById(int id) {
+    public Customer getCustomerById(int id) {
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "SELECT * FROM customers WHERE account_number = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new customer.CustomerBuilder()
+                return new Customer.CustomerBuilder()
                         .setAccountNumber(rs.getInt(1))
                         .setName(rs.getString(2))
                         .setAddress(rs.getString(3))
@@ -48,14 +49,14 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public List<customer> getAllCustomers() {
-        List<customer> list = new ArrayList<>();
+    public List<Customer> getAllCustomers() {
+        List<Customer> list = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "SELECT * FROM customers";
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                customer c = new customer.CustomerBuilder()
+                Customer c = new Customer.CustomerBuilder()
                         .setAccountNumber(rs.getInt(1))
                         .setName(rs.getString(2))
                         .setAddress(rs.getString(3))
@@ -71,7 +72,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public boolean updateCustomer(customer customer) {
+    public boolean updateCustomer(Customer customer) {
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "UPDATE customers SET name=?, address=?, phone_number=?, units_consumed=? WHERE account_number=?";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -98,6 +99,5 @@ public class CustomerDAOImpl implements CustomerDAO {
             e.printStackTrace();
             return false;
         }
-
     }
 }

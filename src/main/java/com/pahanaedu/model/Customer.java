@@ -1,13 +1,13 @@
 package com.pahanaedu.model;
 
-public class customer {
+public class Customer {
     private int accountNumber;
     private String name;
     private String address;
     private String phoneNumber;
     private int unitsConsumed;
 
-    private customer(CustomerBuilder builder) {
+    private Customer(CustomerBuilder builder) {
         this.accountNumber = builder.accountNumber;
         this.name = builder.name;
         this.address = builder.address;
@@ -53,8 +53,8 @@ public class customer {
             return this;
         }
 
-        public customer build() {
-            return new customer(this);
+        public Customer build() {
+            return new Customer(this);
         }
     }
 }
