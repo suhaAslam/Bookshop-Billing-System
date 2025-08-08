@@ -44,17 +44,62 @@ public class ItemDAOImpl implements ItemDAO {
 
     @Override
     public boolean deleteItem(int itemId) {
-        return false;
+        try (Connection conn = DBConnection.getConnection()) {
+            String sql = "DELETE FROM items WHERE item_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, itemId);
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
     public Item getItemById(int itemId) {
-        return null;
+        Item item = null;
+        try (Connection conn = DBConnection.getConnection()) {
+            String sql = "SELECT * FROM items WHERE item_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, itemId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                item = new Item.Builder()
+                        .setItemId(rs.getInt("item_id"))
+                        .setName(rs.getString("name"))
+                        .setDescription(rs.getString("description"))
+                        .setPrice(rs.getDouble("price"))
+                        .setQuantityInStock(rs.getInt("quantity_in_stock"))
+                        .build();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return item;
     }
 
     @Override
     public List<Item> getAllItems() {
-        return List.of();
-    }
+        List<Item> itemList = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection()) {
+            String sql = "SELECT * FROM items";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
 
+            while (rs.next()) {
+                Item item = new Item.Builder()
+                        .setItemId(rs.getInt("item_id"))
+                        .setName(rs.getString("name"))
+                        .setDescription(rs.getString("description"))
+                        .setPrice(rs.getDouble("price"))
+                        .setQuantityInStock(rs.getInt("quantity_in_stock"))
+                        .build();
+                itemList.add(item);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return itemList;
+    }
 }
