@@ -46,10 +46,10 @@
       </div>
 
       <div class="form-group">
-        <label for="unitsConsumed">Units Consumed <span class="required">*</span></label>
+        <label for="unitsConsumed">Units Bought <span class="required">*</span></label>
         <input type="number" id="unitsConsumed" name="unitsConsumed" required
                placeholder="0" min="0" step="1">
-        <small>Electricity units (kWh)</small>
+        <small>number of items purchased</small>
       </div>
     </div>
 
