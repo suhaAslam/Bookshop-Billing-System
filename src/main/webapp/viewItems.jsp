@@ -52,7 +52,7 @@
       <div class="stat-label">Total Stock Quantity</div>
     </div>
     <div class="stat-card">
-      <div class="stat-number">$<%= String.format("%.2f", totalValue) %></div>
+      <div class="stat-number">LRK <%= String.format("%.2f", totalValue) %></div>
       <div class="stat-label">Total Inventory Value</div>
     </div>
   </div>
@@ -65,7 +65,7 @@
         <th>Item ID</th>
         <th>Item Name</th>
         <th>Description</th>
-        <th>Price</th>
+        <th>Price (LRK)</th>
         <th>Stock Quantity</th>
         <th>Actions</th>
       </tr>
@@ -76,7 +76,7 @@
         <td class="item-id">#<%= item.getItemId() %></td>
         <td><%= item.getName() %></td>
         <td><%= item.getDescription() != null ? item.getDescription() : "N/A" %></td>
-        <td><span class="price-badge">$<%= String.format("%.2f", item.getPrice()) %></span></td>
+        <td><span class="price-badge">Rs<%= String.format("%.2f", item.getPrice()) %></span></td>
         <td><span class="quantity-badge <%= item.getQuantityInStock() <= 5 ? "low-stock" : "" %>"><%= item.getQuantityInStock() %></span></td>
         <td>
           <div class="actions-cell">
