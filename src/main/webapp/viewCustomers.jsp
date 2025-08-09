@@ -75,7 +75,7 @@
         <td><%= c.getName() %></td>
         <td><%= c.getAddress() %></td>
         <td><%= c.getPhoneNumber() %></td>
-        <td><span class="units-badge"><%= c.getUnitsConsumed() %> kWh</span></td>
+        <td><span class="units-badge"><%= c.getUnitsConsumed() %> </span></td>
         <td>
           <div class="actions-cell">
             <a href="customer?action=edit&id=<%= c.getAccountNumber() %>"
