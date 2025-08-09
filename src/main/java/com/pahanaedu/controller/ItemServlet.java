@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
+
 @WebServlet("/items")
 public class ItemServlet extends HttpServlet{
     private ItemService itemService;
@@ -19,7 +20,6 @@ public class ItemServlet extends HttpServlet{
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         String action = request.getParameter("action");
 
         if (action == null) {
@@ -46,18 +46,18 @@ public class ItemServlet extends HttpServlet{
     private void listItems(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Item> listItems = itemService.getAllItems();
         request.setAttribute("listItems", listItems);
-        request.getRequestDispatcher("item-list.jsp").forward(request, response);
+        request.getRequestDispatcher("viewItems.jsp").forward(request, response);
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("item-form.jsp").forward(request, response);
+        request.getRequestDispatcher("addItem.jsp").forward(request, response);
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int itemId = Integer.parseInt(request.getParameter("itemId"));
         Item existingItem = itemService.getItemById(itemId);
         request.setAttribute("item", existingItem);
-        request.getRequestDispatcher("item-form.jsp").forward(request, response);
+        request.getRequestDispatcher("editItem.jsp").forward(request, response);
     }
 
     private void deleteItem(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -68,7 +68,6 @@ public class ItemServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         // Parse form data
         String itemIdStr = request.getParameter("itemId");
         String name = request.getParameter("name");
