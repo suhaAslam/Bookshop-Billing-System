@@ -1,20 +1,28 @@
-
 document.addEventListener('DOMContentLoaded', function() {
 
     // Get DOM elements
     const searchInput = document.getElementById('searchInput');
     const itemTable = document.getElementById('itemTable');
-    const itemRows = document.querySelectorAll('.item-row');
+
+    // Debounce function to limit rapid calls
+    function debounce(func, delay) {
+        let timer;
+        return function (...args) {
+            clearTimeout(timer);
+            timer = setTimeout(() => func.apply(this, args), delay);
+        };
+    }
 
     // Search functionality
-    if (searchInput && itemRows.length > 0) {
-        searchInput.addEventListener('input', debounce(handleSearch, 300));
+    if (searchInput) {
+        searchInput.addEventListener('input', debounce(handleSearch, 100));
         searchInput.addEventListener('keydown', handleSearchKeydown);
     }
 
     // Search function
     function handleSearch() {
         const searchTerm = searchInput.value.toLowerCase().trim();
+        const itemRows = document.querySelectorAll('.item-row'); // Always get fresh list
         let visibleCount = 0;
 
         itemRows.forEach(row => {
@@ -36,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Show/hide no results message
         updateNoResultsMessage(visibleCount, searchTerm);
         updateStats(visibleCount);
     }
@@ -48,10 +55,8 @@ document.addEventListener('DOMContentLoaded', function() {
             handleSearch();
             searchInput.blur();
         }
-
         if (e.key === 'Enter') {
             e.preventDefault();
-            // Focus first visible row's edit button
             const firstVisibleRow = document.querySelector('.item-row:not(.hidden)');
             if (firstVisibleRow) {
                 const editBtn = firstVisibleRow.querySelector('.btn-edit');
@@ -63,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update no results message
     function updateNoResultsMessage(visibleCount, searchTerm) {
         let noResultsMsg = document.getElementById('noResultsMessage');
-
         if (visibleCount === 0 && searchTerm) {
             if (!noResultsMsg) {
                 noResultsMsg = document.createElement('div');
@@ -79,31 +83,26 @@ document.addEventListener('DOMContentLoaded', function() {
                         </button>
                     </div>
                 `;
-
                 if (itemTable) {
                     itemTable.parentNode.appendChild(noResultsMsg);
                 }
             } else {
                 noResultsMsg.querySelector('strong').textContent = searchTerm;
             }
-
             noResultsMsg.style.display = 'block';
             if (itemTable) itemTable.style.display = 'none';
         } else {
-            if (noResultsMsg) {
-                noResultsMsg.style.display = 'none';
-            }
+            if (noResultsMsg) noResultsMsg.style.display = 'none';
             if (itemTable) itemTable.style.display = 'table';
         }
     }
 
-    // Update statistics based on visible items
+    // Update statistics
     function updateStats(visibleCount = null) {
+        const itemRows = document.querySelectorAll('.item-row');
         if (visibleCount === null) {
             visibleCount = itemRows.length - document.querySelectorAll('.item-row.hidden').length;
         }
-
-        // Update item count in header or stats
         const itemCountElements = document.querySelectorAll('.total-items, .stat-number');
         if (itemCountElements.length > 0 && searchInput.value.trim()) {
             itemCountElements[0].textContent = `${visibleCount} / ${itemRows.length}`;
@@ -116,11 +115,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (itemTable) {
         const headers = itemTable.querySelectorAll('th');
         headers.forEach((header, index) => {
-            if (index < headers.length - 1) { // Exclude actions column
+            if (index < headers.length - 1) {
                 header.style.cursor = 'pointer';
                 header.addEventListener('click', () => sortTable(index));
-
-                // Add sort indicator
                 const sortIcon = document.createElement('span');
                 sortIcon.className = 'sort-icon';
                 sortIcon.innerHTML = ' ↕';
@@ -137,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const tbody = itemTable.querySelector('tbody');
         const rows = Array.from(tbody.querySelectorAll('.item-row'));
 
-        // Update sort direction
         if (currentSortColumn === columnIndex) {
             currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
         } else {
@@ -145,7 +141,6 @@ document.addEventListener('DOMContentLoaded', function() {
             currentSortColumn = columnIndex;
         }
 
-        // Update sort icons
         const headers = itemTable.querySelectorAll('th');
         headers.forEach((header, index) => {
             const icon = header.querySelector('.sort-icon');
@@ -160,17 +155,24 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Sort rows
         rows.sort((a, b) => {
             let aValue = a.children[columnIndex].textContent.trim();
             let bValue = b.children[columnIndex].textContent.trim();
-
-            // Handle numeric columns
-            if (columnIndex === 0) { // ID column
+            if (columnIndex === 0) {
                 aValue = parseInt(aValue.replace('#', ''));
                 bValue = parseInt(bValue.replace('#', ''));
-            } else if (columnIndex === 3) { // Price column
+            } else if (columnIndex === 3) {
                 aValue = parseFloat(aValue.replace('$', ''));
                 bValue = parseFloat(bValue.replace('$', ''));
-            } else if (columnIndex === 4) { // Quantity column
-                aValue = parseInt(aValue);}
+            } else if (columnIndex === 4) {
+                aValue = parseInt(aValue);
+                bValue = parseInt(bValue);
+            }
+            if (aValue < bValue) return currentSortDirection === 'asc' ? -1 : 1;
+            if (aValue > bValue) return currentSortDirection === 'asc' ? 1 : -1;
+            return 0;
+        });
+
+        rows.forEach(row => tbody.appendChild(row));
+    }
+});

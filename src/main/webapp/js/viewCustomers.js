@@ -11,9 +11,9 @@
     row.style.animation = 'fadeIn 0.3s ease';
 } else {
     row.style.display = 'none';
-}
-});
-});
+            }
+        });
+    });
 
     // Confirm delete with customer details
     function confirmDelete(name, accountNo) {

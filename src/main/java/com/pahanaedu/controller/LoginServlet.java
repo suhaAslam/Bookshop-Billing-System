@@ -27,7 +27,7 @@ public class LoginServlet  extends HttpServlet {
 
         if (dao.validateUser(user)) {
             // Login successful - redirect to dashboard or home page
-            response.sendRedirect("dashboard.jsp");
+            response.sendRedirect("index.jsp");
 
 
         } else {

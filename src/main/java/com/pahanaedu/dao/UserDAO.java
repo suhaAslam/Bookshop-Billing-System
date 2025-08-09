@@ -17,7 +17,7 @@ public class UserDAO {
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, user.getUsername());
-            ps.setString(2, user.getPassword()); // Don't hash again - it's already hashed!
+            ps.setString(2, user.getPassword());
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
