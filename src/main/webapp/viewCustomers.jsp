@@ -26,6 +26,9 @@
     <a href="addCustomer.jsp" class="btn btn-primary">
       ➕ Add New Customer
     </a>
+    <a href="index.jsp" class="btn btn-secondary" style="margin-left:10px;">
+      ⬅ Back to Home
+    </a>
   </div>
 
   <%

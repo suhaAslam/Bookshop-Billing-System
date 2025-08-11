@@ -52,14 +52,14 @@
 
     <div class="welcome-section">
         <h2>Welcome to Admin Dashboard</h2>
-        <p>Streamline your bookshop operations with our comprehensive management system. Access all your administrative tools from this central hub.</p>
-        <p>Monitor your inventory, manage customer relationships, and track your sales performance all in one place.</p>
+        <p>improve your bookshop management with this system. Access all your administrative tools from this central hub.</p>
+        <p>Monitor your inventory, manage customer relationships, and generate bills all in one place.</p>
     </div>
 
 
 
     <div class="actions-section">
-        <h2 class="section-title">functionalities</h2>
+        <h2 class="section-title">Services</h2>
         <div class="action-cards">
             <a href="customer?action=view" class="action-card">
                 <span class="action-icon">👥</span>
@@ -70,7 +70,7 @@
             <a href="items?action=list" class="action-card">
                 <span class="action-icon">📦</span>
                 <h3 class="action-title">Inventory Control</h3>
-                <p class="action-description">Manage your book inventory, update stock levels, and track item availability.</p>
+                <p class="action-description">Manage your book inventory.</p>
             </a>
 
             <a href="createBill.jsp" class="action-card">
@@ -82,7 +82,7 @@
             <a href="viewBills.jsp" class="action-card">
                 <span class="action-icon">📋</span>
                 <h3 class="action-title">View All Bills</h3>
-                <p class="action-description">Review past transactions, search bills, and generate reports for analysis.</p>
+                <p class="action-description">Review past transactions and search bills.</p>
             </a>
         </div>
     </div>
@@ -90,7 +90,7 @@
 
 <!-- Footer -->
 <footer class="footer">
-    <p>&copy; 2025 Pahana Edu Bookshop | Professional Billing System | Developed for Academic Excellence</p>
+    <p>&copy; 2025 Pahana Edu Bookshop | Billing System | Developed for Academic purposes</p>
 </footer>
 
 

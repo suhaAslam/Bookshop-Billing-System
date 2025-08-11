@@ -23,8 +23,11 @@
       <input type="text" class="search-input" placeholder="Search items..." id="searchInput">
       <span class="search-icon">🔍</span>
     </div>
-    <a href="items?action=new" class="btn btn-primary">
+    <a href="items?action=new" class=" btn btn-primary">
       ➕ Add New Item
+    </a>
+    <a href="index.jsp" class="btn btn-secondary" style="margin-left:10px;">
+      ⬅ Back to Home
     </a>
   </div>
 

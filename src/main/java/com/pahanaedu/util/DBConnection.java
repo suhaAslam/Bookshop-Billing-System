@@ -18,11 +18,11 @@ public class DBConnection {
                         "root",
                         "suha123"
                 );
-                System.out.println("✅ Database connection successful!");
+//                System.out.println("✅ Database connection successful!");
             }
         } catch (Exception e) {
-            System.err.println("❌ Database connection failed: " + e.getMessage());
-            e.printStackTrace();
+//            System.err.println("❌ Database connection failed: " + e.getMessage());
+//            e.printStackTrace();
         }
         return connection;
     }
