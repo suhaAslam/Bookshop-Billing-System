@@ -25,11 +25,11 @@
             <span>📦</span>
             <span>Manage Items</span>
         </a>
-        <a href="createBill.jsp" class="nav-link billing">
+        <a href="bill?action=add" class="nav-link billing">
             <span>🧾</span>
             <span>Create Bill</span>
         </a>
-        <a href="viewBills.jsp" class="nav-link billing">
+        <a href="bill?action=view" class="nav-link billing">
             <span>📋</span>
             <span>View Bills</span>
         </a>
@@ -73,13 +73,13 @@
                 <p class="action-description">Manage your book inventory.</p>
             </a>
 
-            <a href="createBill.jsp" class="action-card">
+            <a href="bill?action=add" class="action-card">
                 <span class="action-icon">🧾</span>
                 <h3 class="action-title">Create New Bill</h3>
                 <p class="action-description">Generate new bills for customers, calculate totals, and process transactions.</p>
             </a>
 
-            <a href="viewBills.jsp" class="action-card">
+            <a href="bill?action=view" class="action-card">
                 <span class="action-icon">📋</span>
                 <h3 class="action-title">View All Bills</h3>
                 <p class="action-description">Review past transactions and search bills.</p>

@@ -245,11 +245,9 @@ document.addEventListener('DOMContentLoaded', function() {
             formData[input.name] = input.value;
         });
         try {
-            // Note: localStorage is not available in Claude artifacts
-            // This would work in a real environment
-            // localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+
         } catch (e) {
-            // Silently fail if localStorage is not available
+
         }
     }
 
@@ -287,24 +285,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Price calculator feature
-    const priceInput = document.getElementById('price');
-    const quantityInput = document.getElementById('quantityInStock');
-
-    if (priceInput && quantityInput) {
-        function showTotalValue() {
-            const price = parseFloat(priceInput.value) || 0;
-            const quantity = parseInt(quantityInput.value) || 0;
-            const total = price * quantity;
-
-            if (total > 0) {
-                showNotification(`Total inventory value: $${total.toFixed(2)}`, 'info');
-            }
-        }
-
-        priceInput.addEventListener('blur', showTotalValue);
-        quantityInput.addEventListener('blur', showTotalValue);
-    }
 
     // Initial validation check
     setTimeout(updateSubmitButton, 100);
