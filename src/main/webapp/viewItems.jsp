@@ -42,20 +42,7 @@
     }
   %>
 
-  <div class="stats-container">
-    <div class="stat-card">
-      <div class="stat-number"><%= totalItems %></div>
-      <div class="stat-label">Total Items</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number"><%= totalQuantity %></div>
-      <div class="stat-label">Total Stock Quantity</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number">LRK <%= String.format("%.2f", totalValue) %></div>
-      <div class="stat-label">Total Inventory Value</div>
-    </div>
-  </div>
+
 
   <div class="table-container">
     <% if (listItems != null && !listItems.isEmpty()) { %>

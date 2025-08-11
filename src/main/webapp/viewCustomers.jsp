@@ -40,21 +40,6 @@
     }
   %>
 
-  <div class="stats-container">
-    <div class="stat-card">
-      <div class="stat-number"><%= totalCustomers %></div>
-      <div class="stat-label">Total Customers</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number"><%= totalUnits %></div>
-      <div class="stat-label">Total Units bought</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number"><%= totalCustomers > 0 ? Math.round((double)totalUnits / totalCustomers) : 0 %></div>
-      <div class="stat-label">Average Units per Customer</div>
-    </div>
-  </div>
-
   <div class="table-container">
     <% if (customerlist != null && !customerlist.isEmpty()) { %>
     <table class="table" id="customerTable">

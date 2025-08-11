@@ -1,7 +1,7 @@
 package com.pahanaedu.controller;
 import com.pahanaedu.dao.UserDAO;
 import com.pahanaedu.model.User;
-import com.pahanaedu.util.HashUtil;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,8 +17,7 @@ public class LoginServlet  extends HttpServlet {
         System.out.println("Entered username: " + username);
         System.out.println("Entered password (plain): " + password);
 
-        String hashedPassword = HashUtil.hashPassword(password);
-        User user = new User(username, hashedPassword);
+        User user = new User(username, password);
 
 
 

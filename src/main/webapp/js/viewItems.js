@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
     const itemTable = document.getElementById('itemTable');
 
-    // Debounce function to limit rapid calls
+
     function debounce(func, delay) {
         let timer;
         return function (...args) {
@@ -97,19 +97,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Update statistics
-    function updateStats(visibleCount = null) {
-        const itemRows = document.querySelectorAll('.item-row');
-        if (visibleCount === null) {
-            visibleCount = itemRows.length - document.querySelectorAll('.item-row.hidden').length;
-        }
-        const itemCountElements = document.querySelectorAll('.total-items, .stat-number');
-        if (itemCountElements.length > 0 && searchInput.value.trim()) {
-            itemCountElements[0].textContent = `${visibleCount} / ${itemRows.length}`;
-        } else if (itemCountElements.length > 0) {
-            itemCountElements[0].textContent = itemRows.length;
-        }
-    }
 
     // Sort functionality
     if (itemTable) {

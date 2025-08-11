@@ -12,8 +12,6 @@ public class UserDAO {
         try {
             Connection conn = DBConnection.getConnection();
             String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-            System.out.println("Username: " + user.getUsername());
-            System.out.println("Hashed Password (already hashed): " + user.getPassword());
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, user.getUsername());

@@ -56,8 +56,3 @@
 }
     `;
     document.head.appendChild(style);
-
-    // Auto-refresh every 30 seconds (optional)
-    // setInterval(() => {
-    //     window.location.reload();
-    // }, 30000);

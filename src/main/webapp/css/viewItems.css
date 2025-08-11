@@ -153,42 +153,6 @@ body {
     min-width: auto;
 }
 
-.stats-container {
-    background: white;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.stat-card {
-    padding: 30px 20px;
-    text-align: center;
-    border-right: 1px solid var(--border-color);
-    transition: var(--transition);
-}
-
-.stat-card:last-child {
-    border-right: none;
-}
-
-.stat-card:hover {
-    background: var(--light-gray);
-    transform: translateY(-2px);
-}
-
-.stat-number {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    margin-bottom: 8px;
-}
-
-.stat-label {
-    font-size: 1rem;
-    color: var(--dark-gray);
-    font-weight: 500;
-}
 
 .table-container {
     background: white;
