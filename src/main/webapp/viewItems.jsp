@@ -1,67 +1,101 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.pahanaedu.model.Bill" %>
+<%@ page import="com.pahanaedu.model.Item" %>
 
 <html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>View Bills</title>
+  <title>Item Management - Inventory System</title>
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/viewItems.css">
+
 </head>
 <body>
-<h1>All Bills</h1>
+<div class="container">
+  <div class="header">
+    <h1>Item Management</h1>
+    <p>Manage your inventory items</p>
+  </div>
 
-<div style="margin-bottom: 20px;">
-  <a href="bill?action=add" style="background-color: #4CAF50; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px;">Add New Bill</a>
+  <div class="actions-bar">
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Search items..." id="searchInput">
+      <span class="search-icon">🔍</span>
+    </div>
+    <a href="items?action=new" class="btn btn-primary">
+      ➕ Add New Item
+    </a>
+    <a href="index.jsp" class="btn btn-secondary" style="margin-left:10px;">
+      ⬅ Back to Home
+    </a>
+  </div>
+
+  <%
+    List<Item> listItems = (List<Item>) request.getAttribute("listItems");
+    int totalItems = listItems != null ? listItems.size() : 0;
+    int totalQuantity = 0;
+    double totalValue = 0;
+
+    if (listItems != null) {
+      for (Item item : listItems) {
+        totalQuantity += item.getQuantityInStock();
+        totalValue += item.getPrice() * item.getQuantityInStock();
+      }
+    }
+  %>
+
+
+
+  <div class="table-container">
+    <% if (listItems != null && !listItems.isEmpty()) { %>
+    <table class="table" id="itemTable">
+      <thead>
+      <tr>
+        <th>Item ID</th>
+        <th>Item Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Stock Quantity</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% for (Item item : listItems) { %>
+      <tr class="item-row">
+        <td class="item-id">#<%= item.getItemId() %></td>
+        <td><%= item.getName() %></td>
+        <td><%= item.getDescription() != null ? item.getDescription() : "N/A" %></td>
+        <td><span class="price-badge">Rs<%= String.format("%.2f", item.getPrice()) %></span></td>
+        <td><span class="quantity-badge <%= item.getQuantityInStock() <= 5 ? "low-stock" : "" %>"><%= item.getQuantityInStock() %></span></td>
+        <td>
+          <div class="actions-cell">
+            <a href="items?action=edit&itemId=<%= item.getItemId() %>"
+               class="btn btn-edit btn-small">
+              ✏️ Edit
+            </a>
+            <a href="items?action=delete&itemId=<%= item.getItemId() %>"
+               class="btn btn-delete btn-small"
+               onclick="return confirmDelete('<%= item.getName() %>', '<%= item.getItemId() %>');">
+              🗑️ Delete
+            </a>
+          </div>
+        </td>
+      </tr>
+      <% } %>
+      </tbody>
+    </table>
+    <% } else { %>
+    <div class="empty-state">
+      <h3>No Items Found</h3>
+      <p>Start by adding your first item to the inventory.</p>
+      <a href="items?action=new" class="btn btn-primary">
+        ➕ Add First Item
+      </a>
+    </div>
+    <% } %>
+  </div>
 </div>
+<script src="${pageContext.request.contextPath}/js/viewItems.js"></script>
 
-<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; width: 100%;">
-  <thead>
-  <tr style="background-color: #f2f2f2;">
-    <th>Bill ID</th>
-    <th>Customer ID</th>
-    <th>Item ID</th>
-    <th>Quantity</th>
-    <th>Total Price</th>
-    <th>Bill Date</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  <%
-    List<Bill> billList = (List<Bill>) request.getAttribute("billList");
-    System.out.println("JSP: Bill list size: " + (billList != null ? billList.size() : "null"));
-
-    if (billList != null && !billList.isEmpty()) {
-      for (Bill bill : billList) {
-  %>
-  <tr>
-    <td><%= bill.getBillId() %></td>
-    <td><%= bill.getAccountNumber() %></td>
-    <td><%= bill.getItemId() %></td>
-    <td><%= bill.getQuantity() %></td>
-    <td>Rs <%= bill.getTotalPrice() %></td>
-    <td><%= bill.getBillDate() %></td>
-    <td>
-      <a href="bill?action=delete&id=<%= bill.getBillId() %>"
-         onclick="return confirm('Are you sure you want to delete this bill?')"
-         style="color: red; text-decoration: none;">Delete</a>
-    </td>
-  </tr>
-  <%
-    }
-  } else {
-  %>
-  <tr>
-    <td colspan="7" style="text-align:center;">No bills found.</td>
-  </tr>
-  <%
-    }
-  %>
-  </tbody>
-</table>
-
-<br>
-<a href="index.jsp">⬅ Back to Dashboard</a>
 </body>
 </html>
