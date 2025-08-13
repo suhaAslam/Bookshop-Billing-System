@@ -23,7 +23,6 @@ public class CustomerServlet extends HttpServlet {
         switch (action != null ? action : "") {
             case "edit":
                 int editId = Integer.parseInt(request.getParameter("id"));
-                // ✅ No change here — still calls the same method
                 Customer customer = customerService.getEntityById(editId);
                 request.setAttribute("customer", customer);
                 request.getRequestDispatcher("editCustomer.jsp").forward(request, response);
