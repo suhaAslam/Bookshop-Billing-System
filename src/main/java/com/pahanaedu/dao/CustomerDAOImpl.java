@@ -10,7 +10,7 @@ import java.util.List;
 public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
-    public boolean addCustomer(Customer customer) {
+    public boolean add(Customer customer) {
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "INSERT INTO customers VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -27,7 +27,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public Customer getCustomerById(int id) {
+    public Customer getById(int id) {
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "SELECT * FROM customers WHERE account_number = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -49,7 +49,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getAll() {
         List<Customer> list = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "SELECT * FROM customers";
@@ -72,7 +72,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public boolean updateCustomer(Customer customer) {
+    public boolean update(Customer customer) {
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "UPDATE customers SET name=?, address=?, phone_number=?, units_consumed=? WHERE account_number=?";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -89,7 +89,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     @Override
-    public boolean deleteCustomer(int id) {
+    public boolean delete(int id) {
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "DELETE FROM customers WHERE account_number = ?";
             PreparedStatement ps = conn.prepareStatement(sql);

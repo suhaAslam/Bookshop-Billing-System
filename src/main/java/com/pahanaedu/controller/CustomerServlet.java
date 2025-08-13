@@ -23,20 +23,23 @@ public class CustomerServlet extends HttpServlet {
         switch (action != null ? action : "") {
             case "edit":
                 int editId = Integer.parseInt(request.getParameter("id"));
-                Customer customer = customerService.getCustomerById(editId);
+                // ✅ No change here — still calls the same method
+                Customer customer = customerService.getEntityById(editId);
                 request.setAttribute("customer", customer);
                 request.getRequestDispatcher("editCustomer.jsp").forward(request, response);
                 break;
 
             case "delete":
                 int deleteId = Integer.parseInt(request.getParameter("id"));
-                customerService.deleteCustomer(deleteId);
+                // ✅ Uses deleteEntity from generic service (wrapped by CustomerService if needed)
+                customerService.deleteEntity(deleteId);
                 response.sendRedirect("customer?action=view");
                 break;
 
             case "view":
             default:
-                List<Customer> customerlist = customerService.getAllCustomers();
+                // ✅ Change: getAllCustomers() → getAllEntities()
+                List<Customer> customerlist = customerService.getAllEntities();
                 request.setAttribute("customerList", customerlist);
                 request.getRequestDispatcher("viewCustomers.jsp").forward(request, response);
                 break;
@@ -64,9 +67,9 @@ public class CustomerServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         if ("update".equalsIgnoreCase(action)) {
-            customerService.updateCustomer(customer);
+            customerService.updateCustomer(customer); // Still valid because updateCustomer() wraps updateEntity()
         } else {
-            customerService.addCustomer(customer);
+            customerService.addCustomer(customer);    // Still valid because addCustomer() wraps addEntity()
         }
 
         response.sendRedirect("customer?action=view");
