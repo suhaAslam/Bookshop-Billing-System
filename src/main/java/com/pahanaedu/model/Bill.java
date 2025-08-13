@@ -1,4 +1,4 @@
-// Bill.java - Updated to match database schema
+
 package com.pahanaedu.model;
 
 import java.math.BigDecimal;

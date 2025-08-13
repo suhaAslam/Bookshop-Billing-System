@@ -30,14 +30,14 @@ public class CustomerServlet extends HttpServlet {
 
             case "delete":
                 int deleteId = Integer.parseInt(request.getParameter("id"));
-                // ✅ Uses deleteEntity from generic service (wrapped by CustomerService if needed)
+
                 customerService.deleteEntity(deleteId);
                 response.sendRedirect("customer?action=view");
                 break;
 
             case "view":
             default:
-                // ✅ Change: getAllCustomers() → getAllEntities()
+
                 List<Customer> customerlist = customerService.getAllEntities();
                 request.setAttribute("customerList", customerlist);
                 request.getRequestDispatcher("viewCustomers.jsp").forward(request, response);
