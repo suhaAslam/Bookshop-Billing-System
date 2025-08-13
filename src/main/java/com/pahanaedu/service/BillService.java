@@ -9,20 +9,37 @@ import com.pahanaedu.model.Item;
 import java.util.List;
 
 public class BillService {
-    private BillDAO billDAO = new BillDAOImpl();
 
-    public void createBill(Bill bill) {
-        billDAO.addBill(bill);
+    private final GenericService<Bill> genericService;
+    private final BillDAO billDAO;  // Keep this for extra Bill-specific methods
+
+    public BillService() {
+        this.billDAO = new BillDAOImpl();
+        this.genericService = new GenericService<>(billDAO);
+    }
+
+    // Generic CRUD operations
+    public boolean addBill(Bill bill) {
+        return genericService.addEntity(bill);
+    }
+
+    public Bill getBillById(int id) {
+        return genericService.getEntityById(id);
     }
 
     public List<Bill> getAllBills() {
-        return billDAO.getAllBills();
+        return genericService.getAllEntities();
     }
 
-    public void deleteBill(int billId) {
-        billDAO.deleteBill(billId);
+    public boolean updateBill(Bill bill) {
+        return genericService.updateEntity(bill);
     }
 
+    public boolean deleteBill(int id) {
+        return genericService.deleteEntity(id);
+    }
+
+    // Bill-specific extra methods
     public List<Customer> getCustomers() {
         return billDAO.getAllCustomers();
     }

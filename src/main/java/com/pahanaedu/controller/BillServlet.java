@@ -111,8 +111,8 @@ public class BillServlet extends HttpServlet {
                 bill.setQuantity(quantity);
                 bill.setTotalPrice(totalPrice);
 
-                System.out.println("About to create bill...");
-                billService.createBill(bill);
+
+                billService.addBill(bill);
                 System.out.println("Bill created successfully!");
 
                 response.sendRedirect("bill?action=view");

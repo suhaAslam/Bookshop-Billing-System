@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemDAOImpl implements ItemDAO {
+
     @Override
-    public boolean addItem(Item item) {
+    public boolean add(Item item) {
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "INSERT INTO items VALUES (?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -24,17 +25,16 @@ public class ItemDAOImpl implements ItemDAO {
         }
     }
 
-
     @Override
-    public boolean updateItem(Item item) {
+    public boolean update(Item item) {
         try (Connection conn = DBConnection.getConnection()) {
-            String sql = "UPDATE items SET name=?, description=?,price=?, quantity_in_stock=? WHERE item_id=?";
+            String sql = "UPDATE items SET name=?, description=?, price=?, quantity_in_stock=? WHERE item_id=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, item.getName());
             ps.setString(2, item.getDescription());
             ps.setDouble(3, item.getPrice());
             ps.setInt(4, item.getQuantityInStock());
-            ps.setInt(5,item.getItemId());
+            ps.setInt(5, item.getItemId());
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,11 +43,11 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public boolean deleteItem(int itemId) {
+    public boolean delete(int id) {
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "DELETE FROM items WHERE item_id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, itemId);
+            ps.setInt(1, id);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,12 +56,12 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public Item getItemById(int itemId) {
+    public Item getById(int id) {
         Item item = null;
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "SELECT * FROM items WHERE item_id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, itemId);
+            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -80,7 +80,7 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public List<Item> getAllItems() {
+    public List<Item> getAll() {
         List<Item> itemList = new ArrayList<>();
         try (Connection conn = DBConnection.getConnection()) {
             String sql = "SELECT * FROM items";
