@@ -94,21 +94,8 @@ public class BillDAOImpl implements BillDAO {
     }
     @Override
     public boolean update(Bill bill) {
-        String sql = "UPDATE bill SET customer_id=?, item_id=?, quantity=?, total_price=? WHERE bill_id=?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, bill.getCustomerId());
-            stmt.setInt(2, bill.getItemId());
-            stmt.setInt(3, bill.getQuantity());
-            stmt.setBigDecimal(4, bill.getTotalPrice());
-            stmt.setInt(5, bill.getBillId());
-
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+        // Not needed for this system
+        throw new UnsupportedOperationException("Update operation is not supported for bills.");
     }
 
 

@@ -31,15 +31,11 @@ public class BillService {
         return genericService.getAllEntities();
     }
 
-    public boolean updateBill(Bill bill) {
-        return genericService.updateEntity(bill);
-    }
 
     public boolean deleteBill(int id) {
         return genericService.deleteEntity(id);
     }
 
-    // Bill-specific extra methods
     public List<Customer> getCustomers() {
         return billDAO.getAllCustomers();
     }
