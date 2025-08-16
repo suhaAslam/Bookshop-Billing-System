@@ -68,7 +68,7 @@ public class ItemServlet extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // Parse form data
+
         String itemIdStr = request.getParameter("itemId");
         String name = request.getParameter("name");
         String description = request.getParameter("description");
@@ -82,7 +82,7 @@ public class ItemServlet extends HttpServlet{
             price = Double.parseDouble(priceStr);
             quantity = Integer.parseInt(quantityStr);
         } catch (NumberFormatException e) {
-            // handle invalid input - for now just redirect back
+
             response.sendRedirect("items?action=new");
             return;
         }
@@ -90,7 +90,7 @@ public class ItemServlet extends HttpServlet{
         Item item;
 
         if (itemIdStr == null || itemIdStr.isEmpty()) {
-            // Create new Item using Builder pattern
+
             item = new Item.Builder()
                     .setName(name)
                     .setDescription(description)

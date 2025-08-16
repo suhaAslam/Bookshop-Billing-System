@@ -1,8 +1,6 @@
 package com.pahanaedu.controller;
-
 import com.pahanaedu.model.Customer;
 import com.pahanaedu.service.CustomerService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -66,9 +64,9 @@ public class CustomerServlet extends HttpServlet {
         String action = request.getParameter("action");
 
         if ("update".equalsIgnoreCase(action)) {
-            customerService.updateCustomer(customer); // Still valid because updateCustomer() wraps updateEntity()
+            customerService.updateCustomer(customer);
         } else {
-            customerService.addCustomer(customer);    // Still valid because addCustomer() wraps addEntity()
+            customerService.addCustomer(customer);
         }
 
         response.sendRedirect("customer?action=view");

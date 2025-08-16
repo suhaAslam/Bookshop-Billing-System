@@ -1,35 +1,45 @@
 package com.pahanaedu.service;
 
-import com.pahanaedu.dao.ItemDAO;
 import com.pahanaedu.dao.ItemDAOImpl;
 import com.pahanaedu.model.Item;
 
-import java.util.List;
-
-public class ItemService {
-    private final ItemDAO itemDAO;
+public class ItemService extends GenericService<Item> {
 
     public ItemService() {
-        this.itemDAO = new ItemDAOImpl();
+        super(new ItemDAOImpl());
     }
 
     public boolean addItem(Item item) {
-        return itemDAO.add(item);
+        if (isValid(item)) {
+            return super.addEntity(item);
+        }
+        return false;
     }
 
     public boolean updateItem(Item item) {
-        return itemDAO.update(item);
+        if (isValid(item)) {
+            return super.updateEntity(item);
+        }
+        return false;
     }
 
     public boolean deleteItem(int itemId) {
-        return itemDAO.delete(itemId);
+        return super.deleteEntity(itemId);
     }
 
     public Item getItemById(int itemId) {
-        return itemDAO.getById(itemId);
+        return super.getEntityById(itemId);
     }
 
-    public List<Item> getAllItems() {
-        return itemDAO.getAll();
+    // This method name stays the same to maintain compatibility with ItemServlet
+    public java.util.List<Item> getAllItems() {
+        return super.getAllEntities();
+    }
+
+    private boolean isValid(Item item) {
+        return item.getName() != null && !item.getName().trim().isEmpty()
+                && item.getDescription() != null && !item.getDescription().trim().isEmpty()
+                && item.getPrice() > 0
+                && item.getQuantityInStock() >= 0;
     }
 }

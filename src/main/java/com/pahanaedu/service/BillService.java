@@ -18,7 +18,7 @@ public class BillService {
         this.genericService = new GenericService<>(billDAO);
     }
 
-    // Generic CRUD operations
+
     public boolean addBill(Bill bill) {
         return genericService.addEntity(bill);
     }

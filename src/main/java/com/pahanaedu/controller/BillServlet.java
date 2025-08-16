@@ -23,13 +23,14 @@ public class BillServlet extends HttpServlet {
         String action = request.getParameter("action");
         System.out.println("GET request received with action: " + action);
 
+        //adding ites and customers to have in the dropdown
         switch (action != null ? action : "") {
             case "add":
-                // Load add bill form with dropdown data
                 try {
                     List<Customer> customers = billService.getCustomers();
                     List<Item> items = billService.getItems();
 
+                    //this prints the customers and items added
                     System.out.println("Customers loaded: " + (customers != null ? customers.size() : 0));
                     System.out.println("Items loaded: " + (items != null ? items.size() : 0));
 
@@ -56,6 +57,7 @@ public class BillServlet extends HttpServlet {
             case "view":
             default:
                 List<Bill> bills = billService.getAllBills();
+                //this print the no of bills added
                 System.out.println("Bills loaded: " + (bills != null ? bills.size() : 0));
                 request.setAttribute("billList", bills);
                 request.getRequestDispatcher("viewBills.jsp").forward(request, response);
@@ -68,24 +70,18 @@ public class BillServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
-        System.out.println("POST request received with action: " + action);
-
-        if ("create".equals(action)) {
+        if ("create".equalsIgnoreCase(action)) {
             try {
                 String customerIdStr = request.getParameter("customer_id");
                 String itemIdStr = request.getParameter("item_id");
                 String quantityStr = request.getParameter("quantity");
 
-                System.out.println("Form parameters received:");
-                System.out.println("customer_id: " + customerIdStr);
-                System.out.println("item_id: " + itemIdStr);
-                System.out.println("quantity: " + quantityStr);
 
                 int customerId = Integer.parseInt(request.getParameter("customer_id"));
                 int itemId = Integer.parseInt(request.getParameter("item_id"));
                 int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-                // Validate quantity
+                // checke the quantity
                 if (quantity <= 0) {
                     request.setAttribute("error", "Quantity must be greater than zero.");
                     loadDropdownData(request);
@@ -113,7 +109,6 @@ public class BillServlet extends HttpServlet {
 
 
                 billService.addBill(bill);
-                System.out.println("Bill created successfully!");
 
                 response.sendRedirect("bill?action=view");
             } catch (NumberFormatException e) {

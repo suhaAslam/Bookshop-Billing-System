@@ -21,12 +21,12 @@ public class LoginServlet  extends HttpServlet {
 
 
         if (dao.validateUser(user)) {
-            // Login successful - redirect to dashboard or home page
+
             response.sendRedirect("index.jsp");
 
 
         } else {
-            // Login failed - show error message
+
             request.setAttribute("error", "Invalid username or password.");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }

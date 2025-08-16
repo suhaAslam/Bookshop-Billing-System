@@ -19,6 +19,7 @@ public class UserDAO {
 
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                //debugging purposes
                 System.out.println("✅ User found!");
                 valid = true;
             } else {

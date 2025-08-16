@@ -47,18 +47,11 @@ public class Item {
         this.quantityInStock = builder.quantityInStock;
     }
 
-    // Getters and setters here
     public int getItemId() { return itemId; }
     public String getName() { return name; }
     public String getDescription() { return description; }
     public double getPrice() { return price; }
     public int getQuantityInStock() { return quantityInStock; }
-
-    public void setName(String name) { this.name = name; }
-    public void setDescription(String description) { this.description = description; }
-    public void setPrice(double price) { this.price = price; }
-    public void setQuantityInStock(int quantity) { this.quantityInStock = quantity; }
-
 
 
 }
