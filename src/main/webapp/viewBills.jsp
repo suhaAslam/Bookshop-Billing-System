@@ -451,7 +451,6 @@
     <tbody>
     <%
         List<Bill> billList = (List<Bill>) request.getAttribute("billList");
-        System.out.println("JSP: Bill list size: " + (billList != null ? billList.size() : "null"));
 
         if (billList != null && !billList.isEmpty()) {
             for (Bill bill : billList) {

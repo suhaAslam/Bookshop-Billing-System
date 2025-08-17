@@ -58,7 +58,7 @@ public class BillDAOImpl implements BillDAO {
     @Override
     public List<Bill> getAll() {
         List<Bill> bills = new ArrayList<>();
-        String sql = "SELECT * FROM bill ORDER BY bill_date DESC";
+        String sql = "SELECT * FROM bill";
         try (Connection conn = DBConnection.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -94,8 +94,8 @@ public class BillDAOImpl implements BillDAO {
     }
     @Override
     public boolean update(Bill bill) {
-        // Not needed for this system
-        throw new UnsupportedOperationException("Update operation is not supported for bills.");
+        // this is not needed for this system
+        return false;
     }
 
 

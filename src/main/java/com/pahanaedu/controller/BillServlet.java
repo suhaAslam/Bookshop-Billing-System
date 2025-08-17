@@ -21,7 +21,7 @@ public class BillServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
-        System.out.println("GET request received with action: " + action);
+
 
         //adding ites and customers to have in the dropdown
         switch (action != null ? action : "") {
@@ -38,7 +38,6 @@ public class BillServlet extends HttpServlet {
                     request.setAttribute("items", items);
                     request.getRequestDispatcher("addBill.jsp").forward(request, response);
                 } catch (Exception e) {
-                    e.printStackTrace();
                     request.setAttribute("error", "Error loading form data: " + e.getMessage());
                     request.getRequestDispatcher("addBill.jsp").forward(request, response);
                 }
@@ -72,18 +71,17 @@ public class BillServlet extends HttpServlet {
         String action = request.getParameter("action");
         if ("create".equalsIgnoreCase(action)) {
             try {
-                String customerIdStr = request.getParameter("customer_id");
-                String itemIdStr = request.getParameter("item_id");
-                String quantityStr = request.getParameter("quantity");
+
+//
 
 
                 int customerId = Integer.parseInt(request.getParameter("customer_id"));
                 int itemId = Integer.parseInt(request.getParameter("item_id"));
                 int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-                // checke the quantity
+                // check the quantity
                 if (quantity <= 0) {
-                    request.setAttribute("error", "Quantity must be greater than zero.");
+                    request.setAttribute("error", "error occured .");
                     loadDropdownData(request);
                     request.getRequestDispatcher("addBill.jsp").forward(request, response);
                     return;
@@ -112,14 +110,14 @@ public class BillServlet extends HttpServlet {
 
                 response.sendRedirect("bill?action=view");
             } catch (NumberFormatException e) {
-                System.err.println("NumberFormatException: " + e.getMessage());
+
                 request.setAttribute("error", "Invalid input data.");
+
                 loadDropdownData(request);
                 request.getRequestDispatcher("addBill.jsp").forward(request, response);
             } catch (Exception e) {
-                System.err.println("Exception in bill creation: " + e.getMessage());
-                e.printStackTrace();
-                request.setAttribute("error", "Error creating bill: " + e.getMessage());
+
+                request.setAttribute("error", "Error creating bill:");
                 loadDropdownData(request);
                 request.getRequestDispatcher("addBill.jsp").forward(request, response);
             }
